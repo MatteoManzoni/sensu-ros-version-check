@@ -77,7 +77,7 @@ else
         exit 3
     fi
 
-    if [ -z "$changelog" ]; then
+    if [ -n "$changelog" ]; then
       changelog_lines=$(echo "$changelog" | grep -n "What" | head -n 2 | tail -n 1 | cut -d ":" -f 1)
 
       changelog_impfix=$(echo "$changelog" | head -n "$changelog_lines" | grep -c '!)')
