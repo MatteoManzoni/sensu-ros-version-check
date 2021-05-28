@@ -77,20 +77,26 @@ else
         exit 3
     fi
 
-    changelog_lines=$(echo "$changelog" | grep -n "What" | head -n 2 | tail -n 1 | cut -d ":" -f 1)
+    if [ -z "$changelog" ]; then
+      changelog_lines=$(echo "$changelog" | grep -n "What" | head -n 2 | tail -n 1 | cut -d ":" -f 1)
 
-    changelog_impfix=$(echo "$changelog" | head -n "$changelog_lines" | grep -c '!)')
-    changelog_avgfix=$(echo "$changelog" | head -n "$changelog_lines" | grep -c '[*])')
+      changelog_impfix=$(echo "$changelog" | head -n "$changelog_lines" | grep -c '!)')
+      changelog_avgfix=$(echo "$changelog" | head -n "$changelog_lines" | grep -c '[*])')
 
-    if [ "$changelog_impfix" -ne 0 ] && [ "$changelog_avgfix" -ne 0 ]; then
-        fix_text="$changelog_impfix important fixes, $changelog_avgfix average fixes"
-        fix_result=2
-    elif [ "$changelog_impfix" -ne 0 ]; then
-        fix_text="$changelog_impfix important fixes"
-        fix_result=2
-    elif [ "$changelog_avgfix" -ne 0 ]; then
-        fix_text="$changelog_avgfix average fixes"
-        fix_result=1
+
+      if [ "$changelog_impfix" -ne 0 ] && [ "$changelog_avgfix" -ne 0 ]; then
+          fix_text="$changelog_impfix important fixes, $changelog_avgfix average fixes"
+          fix_result=2
+      elif [ "$changelog_impfix" -ne 0 ]; then
+          fix_text="$changelog_impfix important fixes"
+          fix_result=2
+      elif [ "$changelog_avgfix" -ne 0 ]; then
+          fix_text="$changelog_avgfix average fixes"
+          fix_result=1
+      fi
+    else 
+      fix_result=1
+      fix_text="NO CHANGELOG IS PRESENT"
     fi
 
     echo "RouterOS is upgradable to $latest_ros_version ($fix_text)"
