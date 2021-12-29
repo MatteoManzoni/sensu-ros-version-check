@@ -37,16 +37,16 @@ set -- "${POSITIONAL[@]}"
 
 case $ROS_BRANCH in
     development)
-    ROS_BRANCH_NUMBER="7"
+    ROS_BRANCH_NUMBER="7.development"
     ;;
     testing)
-    ROS_BRANCH_NUMBER="6rc"
+    ROS_BRANCH_NUMBER="7.testing"
     ;;
     stable)
-    ROS_BRANCH_NUMBER="6"
+    ROS_BRANCH_NUMBER="7.stable"
     ;;
     LTS)
-    ROS_BRANCH_NUMBER="6fix"
+    ROS_BRANCH_NUMBER="6.stable"
     ;;
     *)
     ROS_BRANCH_NUMBER="6"
@@ -60,7 +60,7 @@ else
     current_ros_version=$(echo "$current_ros_version" | tr -d '"')
 fi
 
-if ! latest_ros_version_string=$(curl -fsA "check_routeros-upgrade" "$ROUTEROS_REPO/LATEST.$ROS_BRANCH_NUMBER"); then
+if ! latest_ros_version_string=$(curl -fsA "check_routeros-upgrade" "$ROUTEROS_REPO/NEWEST.$ROS_BRANCH_NUMBER"); then
     echo "Could not connect to Mikrotik repo to check latest ROS version"
     exit 3
 fi
