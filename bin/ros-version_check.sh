@@ -60,7 +60,7 @@ else
     current_ros_version=$(echo "$current_ros_version" | tr -d '"')
 fi
 
-if ! latest_ros_version_string=$(curl -fsA "check_routeros-upgrade" "$ROUTEROS_REPO/NEWEST.$ROS_BRANCH_NUMBER"); then
+if ! latest_ros_version_string=$(curl -fsA "check_routeros-upgrade" "$ROUTEROS_REPO/NEWEST$ROS_BRANCH_NUMBER"); then
     echo "Could not connect to Mikrotik repo to check latest ROS version"
     exit 3
 fi
