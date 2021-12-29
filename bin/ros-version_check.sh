@@ -93,6 +93,8 @@ else
       elif [ "$changelog_avgfix" -ne 0 ]; then
           fix_text="$changelog_avgfix average fixes"
           fix_result=1
+      else
+          fix_result=1
       fi
     else 
       fix_result=1
